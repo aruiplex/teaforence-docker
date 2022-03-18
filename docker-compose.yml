@@ -1,0 +1,28 @@
+version: "3"
+services:
+  caddy:
+    container_name: caddy
+    image: caddy:2.4.6
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "7443:7443"
+    volumes:
+      - /home/ubuntu/workplace-docker/Caddyfile:/etc/caddy/Caddyfile
+      - /home/ubuntu/workplace-docker/site:/srv
+      - /home/ubuntu/workplace-docker/files:/files
+      - caddy_data:/data
+      - caddy_config:/config
+
+  tea_api:
+    container_name: tea_api
+    image: tea_api:latest
+    restart: unless-stopped
+    ports:
+      - "7022:7022"
+
+volumes:
+  caddy_data:
+    external: true
+  caddy_config:

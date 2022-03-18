@@ -1,0 +1,32 @@
+{
+        log {
+                output file /caddy_log
+                format json
+                level INFO
+        }
+}
+
+api.teaforence.com {
+        encode gzip
+        
+        # static files
+        file_server /files/* {
+                root /
+                browse
+        }
+
+        # little plane in aruix.net 
+        reverse_proxy /little-plane localhost:11451
+
+        # teaforence frontend 
+        file_server {
+                root /srv
+        }
+        # tea_api in another docker container
+        reverse_proxy /api/* tea_api:7022
+}
+
+dev.teaforence.com:7443 {
+        # tea_api in another docker container
+        reverse_proxy tea_api:7022
+}

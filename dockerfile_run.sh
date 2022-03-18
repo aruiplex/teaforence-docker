@@ -1,0 +1,1 @@
+docker build --tag tea_api:1.1.3 .
